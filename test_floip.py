@@ -42,3 +42,22 @@ def test_geopoint_question_to_xform():
     bind_xml = (
         u'<bind nodeset="/floip/%(name)s" type="geopoint"/>' % question)
     assert question.xml_binding().toxml() == bind_xml
+
+
+def test_numeric_question_to_xform():
+    """
+    Test geo_point floip queston to XForm.
+    """
+    survey = Survey(name='floip')
+    question = xform_from_floip_dict(survey, 'ae54db', {
+        "type": "numeric",
+        "label": "How much do you weigh, in lbs?",
+        "type_options": {"range": [1, 250]}
+    })
+    body_xml = (
+        u'<input ref="/floip/%(name)s"><label>%(label)s</label></input>' %
+        question)
+    assert question.xml_control().toxml() == body_xml
+    bind_xml = (
+        u'<bind nodeset="/floip/%(name)s" type="int"/>' % question)
+    assert question.xml_binding().toxml() == bind_xml
