@@ -76,10 +76,19 @@ def test_multichoice_q_to_xform():
                 "male",
                 "female",
                 "not identified"]}})
+    choices = [
+        '<item><label>male</label><value>male</value></item>',
+        '<item><label>female</label><value>female</value></item>',
+        '<item><label>not identified</label><value>not identified</value>'
+        '</item>'
+    ]
+    expected_data = {'name': question['name'], 'label': question['label'],
+                     'choices': ''.join(choices)}
     body_xml = (
-        u'<select1 ref="/floip/%(name)s"><label>%(label)s</label></select1>' %
-        question)
+        u'<select1 ref="/floip/%(name)s"><label>%(label)s</label>%(choices)s'
+        u'</select1>' % expected_data)
     assert question.xml_control().toxml() == body_xml
     bind_xml = (
         u'<bind nodeset="/floip/%(name)s" type="select1"/>' % question)
     assert question.xml_binding().toxml() == bind_xml
+    assert len([child.xml() for child in question.children]) == 3

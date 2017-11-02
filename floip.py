@@ -4,12 +4,15 @@ FLOIP utility functions.
 """
 
 from pyxform.builder import create_survey_element_from_dict
+from pyxform import constants
+
+MULTIPLE_CHOICE = 'multiple_choice'
 
 QUESTION_TYPES = {
-    "multiple_choice": "select_one",
-    "numeric": "integer",
-    "open": "text",
-    "geo_point": "geopoint"
+    MULTIPLE_CHOICE: constants.SELECT_ONE,
+    'numeric': 'integer',
+    'open': 'text',
+    'geo_point': 'geopoint'
 }
 
 
@@ -28,6 +31,9 @@ def xform_from_floip_dict(survey, name, values):
         'label': values['label'],
         'type': question_type
     }
+    if question_type == constants.SELECT_ONE:
+        question_dict['choices'] = [
+            {'label': x, 'name': x} for x in values['type_options']['choices']]
     question = create_survey_element_from_dict(question_dict)
     survey.add_child(question)
 
