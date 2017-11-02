@@ -46,10 +46,10 @@ def test_geopoint_question_to_xform():
 
 def test_numeric_question_to_xform():
     """
-    Test geo_point floip queston to XForm.
+    Test numeric floip queston to XForm.
     """
     survey = Survey(name='floip')
-    question = xform_from_floip_dict(survey, 'ae54db', {
+    question = xform_from_floip_dict(survey, 'ae54d8', {
         "type": "numeric",
         "label": "How much do you weigh, in lbs?",
         "type_options": {"range": [1, 250]}
@@ -60,4 +60,26 @@ def test_numeric_question_to_xform():
     assert question.xml_control().toxml() == body_xml
     bind_xml = (
         u'<bind nodeset="/floip/%(name)s" type="int"/>' % question)
+    assert question.xml_binding().toxml() == bind_xml
+
+
+def test_multichoice_q_to_xform():
+    """
+    Test multiple_choice floip queston to XForm.
+    """
+    survey = Survey(name='floip')
+    question = xform_from_floip_dict(survey, 'ae54d3', {
+        "type": "multiple_choice",
+        "label": "Are you male or female?",
+        "type_options": {
+            "choices": [
+                "male",
+                "female",
+                "not identified"]}})
+    body_xml = (
+        u'<select1 ref="/floip/%(name)s"><label>%(label)s</label></select1>' %
+        question)
+    assert question.xml_control().toxml() == body_xml
+    bind_xml = (
+        u'<bind nodeset="/floip/%(name)s" type="select1"/>' % question)
     assert question.xml_binding().toxml() == bind_xml
