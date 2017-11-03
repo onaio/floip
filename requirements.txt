@@ -30,12 +30,13 @@ openpyxl==2.4.9           # via tabulator
 pip-tools==1.10.1
 py==1.4.34                # via pytest
 pylint==1.7.4
+pytest-pylint==0.7.1
 pytest==3.2.3
 python-dateutil==2.6.1    # via tableschema
 pyxform==0.9.24
 requests==2.18.4          # via datapackage, tableschema, tabulator
 rfc3986==1.1.0            # via tableschema
-six==1.11.0               # via astroid, datapackage, isodate, jsonlines, linear-tsv, pip-tools, pylint, python-dateutil, tableschema, tabulator, unittest2
+six==1.11.0               # via astroid, datapackage, isodate, jsonlines, linear-tsv, pip-tools, pylint, pytest-pylint, python-dateutil, tableschema, tabulator, unittest2
 sqlalchemy==1.1.14        # via tabulator
 tableschema==1.0.8        # via datapackage
 tabulator==1.11.1         # via datapackage, tableschema

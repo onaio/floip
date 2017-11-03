@@ -1,7 +1,8 @@
 datapackage
 pyxform
 pip-tools
-pytest
 pylint
+pytest
+pytest-pylint
 yapf
 isort
