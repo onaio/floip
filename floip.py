@@ -3,11 +3,7 @@
 FLOIP utility functions.
 """
 
-import codecs
-import json
-import os
-
-import six
+from datapackage import Package
 
 from pyxform import Survey, constants
 from pyxform.builder import create_survey_element_from_dict
@@ -59,30 +55,27 @@ class FloipSurvey(object):
     """Converter of a FLOIP Result descriptor to Openrosa XForm.
     """
 
-    def __init__(self, name, descriptor=None, title=None, id_string=None):
-        title = name if title is None else title
-        id_string = name if id_string is None else id_string
-        self._survey = Survey(name=name, id_string=id_string, title=title)
-
-        if isinstance(descriptor, six.string_types):
-            if os.path.isfile(descriptor):
-                with codecs.open(descriptor) as descriptor_file:
-                    self.descriptor = json.load(descriptor_file)
-                    self.build()
+    def __init__(self, descriptor=None, title=None, id_string=None):
+        self._package = Package(descriptor)
+        self._name = id_string or self._package.descriptor.get('name')
+        assert self._name, "The 'name' property must be defined."
+        title = title or self._package.descriptor.get('title') or self._name
+        self._survey = Survey(name='data', id_string=self._name, title=title)
+        self.build()
 
     def build(self):
         """Creates the survey questions for the XForm a FLOIP descriptor.
         """
-        assert hasattr(self, 'descriptor')
-        assert 'resources' in self.descriptor
+        data_resource_name = self._name + '-data'
+        resource = self._package.get_resource(data_resource_name)
+        if not resource:
+            raise ValueError(
+                "The data resource '{name}' is not defined.".format(
+                    name=data_resource_name))
+        assert 'schema' in resource.descriptor
+        assert 'questions' in resource.descriptor['schema']
 
-        resources = self.descriptor['resources']
-        num_resources = len(resources)
-        assert isinstance(resources, list) and num_resources
-        assert 'schema' in resources[0]
-        assert 'questions' in resources[0]['schema']
-
-        questions = resources[0]['schema']['questions']
+        questions = resource.descriptor['schema']['questions']
 
         for name, values in questions.items():
             xform_from_floip_dict(self._survey, name, values)

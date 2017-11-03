@@ -1,5 +1,28 @@
-A FLOIP results specification to XForm converter
-================================================
+floip-py
+========
 
-Takes a FLOIP results specification data package and generates a pyxform `Survey`
-object which can be used to generate the XForm matching the specification.
+A library for converting the questions in a FLOIP Data Package descriptor to an
+ODK XForm.
+
+Getting Started
+---------------
+
+pip install -r git+git://github.com/onaio/floip-py.git@master
+
+
+Example
+^^^^^^^
+
+.. code-block:: python
+   :linenos:
+
+   from floip import FloipSurvey
+
+   suvey = FloipSurvey('data/flow-results-example-1.json')
+   print(survey.xml())
+
+
+FloipSurvey
+^^^^^^^^^^^
+
+A class that converts a FLOIP results data package to an ODK XForm.

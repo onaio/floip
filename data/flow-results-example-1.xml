@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <h:head>
-    <h:title>Flow Results Example 1</h:title>
+    <h:title>A nice title</h:title>
     <model>
       <instance>
-        <floip id="flow-results-example-1">
+        <data id="flow-results-example-1">
           <ae54d3/>
           <ae54d7/>
           <ae54d8/>
           <ae54da/>
           <ae54db/>
-        </floip>
+        </data>
       </instance>
-      <bind nodeset="/floip/ae54d3" type="select1"/>
-      <bind nodeset="/floip/ae54d7" type="select1"/>
-      <bind constraint=". &gt;= 1 and . &lt;= 250" nodeset="/floip/ae54d8" type="int"/>
-      <bind nodeset="/floip/ae54da" type="string"/>
-      <bind nodeset="/floip/ae54db" type="geopoint"/>
+      <bind nodeset="/data/ae54d3" type="select1"/>
+      <bind nodeset="/data/ae54d7" type="select1"/>
+      <bind constraint=". &gt;= 1 and . &lt;= 250" nodeset="/data/ae54d8" type="int"/>
+      <bind nodeset="/data/ae54da" type="string"/>
+      <bind nodeset="/data/ae54db" type="geopoint"/>
     </model>
   </h:head>
   <h:body>
-    <select1 ref="/floip/ae54d3">
+    <select1 ref="/data/ae54d3">
       <label>Are you male or female?</label>
       <item>
         <label>male</label>
@@ -35,7 +35,7 @@
         <value>not identified</value>
       </item>
     </select1>
-    <select1 ref="/floip/ae54d7">
+    <select1 ref="/data/ae54d7">
       <label>Favorite ice cream flavor?</label>
       <item>
         <label>chocolate</label>
@@ -50,13 +50,13 @@
         <value>strawberry</value>
       </item>
     </select1>
-    <input ref="/floip/ae54d8">
+    <input ref="/data/ae54d8">
       <label>How much do you weigh, in lbs?</label>
     </input>
-    <input ref="/floip/ae54da">
+    <input ref="/data/ae54da">
       <label>How are you feeling today?</label>
     </input>
-    <input ref="/floip/ae54db">
+    <input ref="/data/ae54db">
       <label>Where are you?</label>
     </input>
   </h:body>

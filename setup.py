@@ -17,9 +17,9 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='floip',
     version='0.0.1',
-    description='Converts FLOIP Results Specification to OpenRosa XForm',
+    description='Converts FLOIP Results data package to XForm',
     long_description=long_description,
-    url='https://github.com/onaio/floip',
+    url='https://github.com/onaio/floip-py',
 
     # Author details
     author='Ona Systems LLC',
@@ -31,14 +31,10 @@ setup(
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries',
 
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
-    keywords='FLOIP ODK pyxform XForm OpenRosa Ona',
+    keywords='FLOIP ODK XForm pyxform XLSForm',
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
-    install_requires=['pyxform'],
+    install_requires=['datapackage', 'pyxform'],
 )
