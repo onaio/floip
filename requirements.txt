@@ -9,7 +9,7 @@ astroid==1.5.3            # via pylint
 cchardet==1.1.3           # via datapackage, tabulator
 certifi==2017.7.27.1      # via requests
 chardet==3.0.4            # via requests
-click==6.7                # via datapackage, pip-tools, tableschema, tabulator
+click==6.7
 datapackage==1.1.4
 et-xmlfile==1.0.1         # via openpyxl
 first==2.0.1              # via pip-tools

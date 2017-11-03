@@ -37,4 +37,9 @@ setup(
     keywords='FLOIP ODK XForm pyxform XLSForm',
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     install_requires=['datapackage', 'pyxform'],
+    entry_points={
+        'console_scripts': [
+            'floip = floip.cli:cli'
+        ]
+    },
 )

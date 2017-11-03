@@ -5,7 +5,8 @@ ODK XForm.
 
 ## Getting Started
 
-    pip install -r git+git://github.com/onaio/floip-py.git@master
+    $ pip install -r git+git://github.com/onaio/floip-py.git@master
+    $ floip data/flow-results-example-1.json
 
 
 ### Example
