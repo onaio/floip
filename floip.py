@@ -31,9 +31,18 @@ def xform_from_floip_dict(survey, name, values):
         'label': values['label'],
         'type': question_type
     }
+    options = values.get('type_options')
     if question_type == constants.SELECT_ONE:
         question_dict['choices'] = [
-            {'label': x, 'name': x} for x in values['type_options']['choices']]
+            {'label': x, 'name': x} for x in options['choices']]
+    if options and 'range' in options:
+        assert len(options['range']) > 1, "range requires atleast two values."
+        start, end = options['range'][0], options['range'][1]
+        constraint = '. >= %(start)s and . <= %(end)s' % {'start': start,
+                                                          'end': end}
+        if 'bind' not in question_dict:
+            question_dict['bind'] = {}
+        question_dict['bind'].update({'constraint': constraint})
     question = create_survey_element_from_dict(question_dict)
     survey.add_child(question)
 

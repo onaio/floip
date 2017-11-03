@@ -52,7 +52,7 @@ def test_numeric_question_to_xform():
     question = xform_from_floip_dict(survey, 'ae54d8', {
         "type": "numeric",
         "label": "How much do you weigh, in lbs?",
-        "type_options": {"range": [1, 250]}
+        "type_options": {}
     })
     body_xml = (
         u'<input ref="/floip/%(name)s"><label>%(label)s</label></input>' %
@@ -60,6 +60,26 @@ def test_numeric_question_to_xform():
     assert question.xml_control().toxml() == body_xml
     bind_xml = (
         u'<bind nodeset="/floip/%(name)s" type="int"/>' % question)
+    assert question.xml_binding().toxml() == bind_xml
+
+
+def test_numeric_range_q_to_xform():
+    """
+    Test numeric range floip queston to XForm.
+    """
+    survey = Survey(name='floip')
+    question = xform_from_floip_dict(survey, 'ae54d8', {
+        "type": "numeric",
+        "label": "How much do you weigh, in lbs?",
+        "type_options": {"range": [1, 250]}
+    })
+    body_xml = (
+        u'<input ref="/floip/%(name)s"><label>%(label)s</label></input>' %
+        question)
+    assert question.xml_control().toxml() == body_xml
+    bind_xml = (
+        u'<bind constraint=". &gt;= 1 and . &lt;= 250" '
+        u'nodeset="/floip/%(name)s" type="int"/>' % question)
     assert question.xml_binding().toxml() == bind_xml
 
 
