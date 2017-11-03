@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <h:head>
+    <h:title>Flow Results Example 1</h:title>
+    <model>
+      <instance>
+        <floip id="flow-results-example-1">
+          <ae54d3/>
+          <ae54d7/>
+          <ae54d8/>
+          <ae54da/>
+          <ae54db/>
+        </floip>
+      </instance>
+      <bind nodeset="/floip/ae54d3" type="select1"/>
+      <bind nodeset="/floip/ae54d7" type="select1"/>
+      <bind constraint=". &gt;= 1 and . &lt;= 250" nodeset="/floip/ae54d8" type="int"/>
+      <bind nodeset="/floip/ae54da" type="string"/>
+      <bind nodeset="/floip/ae54db" type="geopoint"/>
+    </model>
+  </h:head>
+  <h:body>
+    <select1 ref="/floip/ae54d3">
+      <label>Are you male or female?</label>
+      <item>
+        <label>male</label>
+        <value>male</value>
+      </item>
+      <item>
+        <label>female</label>
+        <value>female</value>
+      </item>
+      <item>
+        <label>not identified</label>
+        <value>not identified</value>
+      </item>
+    </select1>
+    <select1 ref="/floip/ae54d7">
+      <label>Favorite ice cream flavor?</label>
+      <item>
+        <label>chocolate</label>
+        <value>chocolate</value>
+      </item>
+      <item>
+        <label>vanilla</label>
+        <value>vanilla</value>
+      </item>
+      <item>
+        <label>strawberry</label>
+        <value>strawberry</value>
+      </item>
+    </select1>
+    <input ref="/floip/ae54d8">
+      <label>How much do you weigh, in lbs?</label>
+    </input>
+    <input ref="/floip/ae54da">
+      <label>How are you feeling today?</label>
+    </input>
+    <input ref="/floip/ae54db">
+      <label>Where are you?</label>
+    </input>
+  </h:body>
+</h:html>

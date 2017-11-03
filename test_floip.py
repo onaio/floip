@@ -2,7 +2,10 @@
 """
 Test floip utility functions."
 """
-from floip import xform_from_floip_dict
+
+import codecs
+
+from floip import FloipSurvey, xform_from_floip_dict
 from pyxform import Survey
 
 
@@ -112,3 +115,14 @@ def test_multichoice_q_to_xform():
         u'<bind nodeset="/floip/%(name)s" type="select1"/>' % question)
     assert question.xml_binding().toxml() == bind_xml
     assert len([child.xml() for child in question.children]) == 3
+
+
+def test_floip_survey():
+    """Test FloipSurvey class
+    """
+    survey = FloipSurvey('floip',
+                         'data/flow-results-example-1.json',
+                         title='Flow Results Example 1',
+                         id_string='flow-results-example-1')
+    with codecs.open('data/flow-results-example-1.xml') as xform_file:
+        assert survey.xml() == xform_file.read()

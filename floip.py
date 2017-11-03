@@ -3,8 +3,14 @@
 FLOIP utility functions.
 """
 
+import codecs
+import json
+import os
+
+import six
+
+from pyxform import Survey, constants
 from pyxform.builder import create_survey_element_from_dict
-from pyxform import constants
 
 MULTIPLE_CHOICE = 'multiple_choice'
 
@@ -47,3 +53,49 @@ def xform_from_floip_dict(survey, name, values):
     survey.add_child(question)
 
     return question
+
+
+class FloipSurvey(object):
+    """Converter of a FLOIP Result descriptor to Openrosa XForm.
+    """
+
+    def __init__(self, name, descriptor=None, title=None, id_string=None):
+        title = name if title is None else title
+        id_string = name if id_string is None else id_string
+        self._survey = Survey(name=name, id_string=id_string, title=title)
+
+        if isinstance(descriptor, six.string_types):
+            if os.path.isfile(descriptor):
+                with codecs.open(descriptor) as descriptor_file:
+                    self.descriptor = json.load(descriptor_file)
+                    self.build()
+
+    def build(self):
+        """Creates the survey questions for the XForm a FLOIP descriptor.
+        """
+        assert hasattr(self, 'descriptor')
+        assert 'resources' in self.descriptor
+
+        resources = self.descriptor['resources']
+        num_resources = len(resources)
+        assert isinstance(resources, list) and num_resources
+        assert 'schema' in resources[0]
+        assert 'questions' in resources[0]['schema']
+
+        questions = resources[0]['schema']['questions']
+
+        for name, values in questions.items():
+            xform_from_floip_dict(self._survey, name, values)
+
+        self._survey.validate()
+
+    @property
+    def survey(self):
+        """Returns a pyxform `Survey` object
+        """
+        return self._survey
+
+    def xml(self):
+        """Returns a XForm XML
+        """
+        return self._survey.to_xml()
