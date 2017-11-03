@@ -52,7 +52,8 @@ def xform_from_floip_dict(survey, name, values):
 
 
 class FloipSurvey(object):
-    """Converter of a FLOIP Result descriptor to Openrosa XForm.
+    """
+    Converter of a FLOIP Result descriptor to Openrosa XForm.
     """
 
     def __init__(self, descriptor=None, title=None, id_string=None):
@@ -64,7 +65,8 @@ class FloipSurvey(object):
         self.build()
 
     def build(self):
-        """Creates the survey questions for the XForm a FLOIP descriptor.
+        """
+        Creates the survey questions for the XForm a FLOIP descriptor.
         """
         data_resource_name = self._name + '-data'
         resource = self._package.get_resource(data_resource_name)
@@ -84,11 +86,13 @@ class FloipSurvey(object):
 
     @property
     def survey(self):
-        """Returns a pyxform `Survey` object
+        """
+        Returns a pyxform `Survey` object
         """
         return self._survey
 
     def xml(self):
-        """Returns a XForm XML
+        """
+        Returns a XForm XML
         """
         return self._survey.to_xml()

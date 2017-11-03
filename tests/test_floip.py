@@ -118,7 +118,8 @@ def test_multichoice_q_to_xform():
 
 
 def test_floip_survey():
-    """Test FloipSurvey class
+    """
+    Test FloipSurvey class
     """
     survey = FloipSurvey('data/flow-results-example-1.json')
     with codecs.open('data/flow-results-example-1.xml') as xform_file:
