@@ -61,7 +61,13 @@ class FloipSurvey(object):
         self._name = id_string or self._package.descriptor.get('name')
         assert self._name, "The 'name' property must be defined."
         title = title or self._package.descriptor.get('title') or self._name
-        self._survey = Survey(name='data', id_string=self._name, title=title)
+        survey_dict = {
+            constants.NAME: 'data',
+            constants.ID_STRING: self._name,
+            constants.TITLE: title,
+            constants.TYPE: constants.SURVEY,
+        }
+        self._survey = Survey(**survey_dict)
         self.build()
 
     def build(self):
@@ -83,6 +89,8 @@ class FloipSurvey(object):
             xform_from_floip_dict(self._survey, name, values)
 
         self._survey.validate()
+        # check that we can recreate the survey object from the survey JSON
+        create_survey_element_from_dict(self._survey.to_json_dict())
 
     @property
     def survey(self):
