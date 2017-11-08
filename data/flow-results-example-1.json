@@ -64,8 +64,8 @@
             "type_options":{
               "choices":[
                 "chocolate",
-                "cake",
-                "chocolate"
+                "vanilla",
+                "strawberry"
               ]
             }
           },
@@ -91,7 +91,7 @@
           },
           "ae54d6":{
             "type":"datetime",
-            "label":"What is the data and time?",
+            "label":"What is the date and time?",
             "type_options":{}
           },
           "ae54d7":{

@@ -18,11 +18,17 @@
           <ae54dc/>
         </data>
       </instance>
-      <bind nodeset="/data/ae54d3" type="select1"/>
-      <bind nodeset="/data/ae54d7" type="select1"/>
-      <bind constraint=". &gt;= 1 and . &lt;= 250" nodeset="/data/ae54d8" type="int"/>
-      <bind nodeset="/data/ae54da" type="string"/>
-      <bind nodeset="/data/ae54db" type="geopoint"/>
+      <bind nodeset="/data/ae54d1" type="select1"/>
+      <bind nodeset="/data/ae54d2" type="select"/>
+      <bind constraint=". &gt;= 1 and . &lt;= 250" nodeset="/data/ae54d3" type="int"/>
+      <bind nodeset="/data/ae54d4" type="time"/>
+      <bind nodeset="/data/ae54d5" type="date"/>
+      <bind nodeset="/data/ae54d6" type="dateTime"/>
+      <bind nodeset="/data/ae54d7" type="string"/>
+      <bind nodeset="/data/ae54d8" type="geopoint"/>
+      <bind nodeset="/data/ae54da" type="binary"/>
+      <bind nodeset="/data/ae54db" type="binary"/>
+      <bind nodeset="/data/ae54dc" type="binary"/>
     </model>
   </h:head>
   <h:body>
@@ -41,7 +47,7 @@
         <value>not identified</value>
       </item>
     </select1>
-    <select1 ref="/data/ae54d2">
+    <select ref="/data/ae54d2">
       <label>Favorite ice cream flavor?</label>
       <item>
         <label>chocolate</label>
@@ -55,7 +61,7 @@
         <label>strawberry</label>
         <value>strawberry</value>
       </item>
-    </select1>
+    </select>
     <input ref="/data/ae54d3">
       <label>How much do you weigh, in lbs?</label>
     </input>
@@ -63,10 +69,10 @@
       <label>What is the time?</label>
     </input>
     <input ref="/data/ae54d5">
-      <label>What is the time?</label>
+      <label>What is the date?</label>
     </input>
     <input ref="/data/ae54d6">
-      <label>What is the data and time?</label>
+      <label>What is the date and time?</label>
     </input>
     <input ref="/data/ae54d7">
       <label>How are you feeling today?</label>
@@ -76,12 +82,12 @@
     </input>
     <upload mediatype="image/*" ref="/data/ae54da">
       <label>Could you send an image?</label>
-    </input>
-    <input mediatype="audio/*" ref="/data/ae54db">
-      <label>Could you send an audio</label>
-    </input>
-    <input mediatype="video/*" ref="/data/ae54dc">
+    </upload>
+    <upload mediatype="audio/*" ref="/data/ae54db">
+      <label>Could you send an audio?</label>
+    </upload>
+    <upload mediatype="video/*" ref="/data/ae54dc">
       <label>Could you send a video?</label>
-    </input>
+    </upload>
   </h:body>
 </h:html>
