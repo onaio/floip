@@ -1,6 +1,11 @@
 pyfloip
 =======
 
+|travis|
+
+.. |travis| image:: https://travis-ci.org/onaio/floip-py.svg?branch=master
+            :target: https://travis-ci.org/onaio/floip-py
+
 A library for converting the questions in a FLOIP Data Package descriptor to an
 ODK XForm.
 
