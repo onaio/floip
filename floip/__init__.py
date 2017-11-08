@@ -8,23 +8,20 @@ from datapackage import Package
 from pyxform import Survey, constants
 from pyxform.builder import create_survey_element_from_dict
 
-MULTIPLE_CHOICE = 'multiple_choice'
 SELECT_QUESTION = [constants.SELECT_ONE, constants.SELECT_ALL_THAT_APPLY]
 
 QUESTION_TYPES = {
-    MULTIPLE_CHOICE: constants.SELECT_ONE,
-    'numeric': 'integer',
-    'geo_point': 'geopoint',
+    'audio': 'audio',
+    'date': 'date',
     'datetime': 'dateTime',
+    'geo_point': 'geopoint',
+    'image': 'image',
+    'numeric': 'integer',
     'select_one': constants.SELECT_ONE,
     'select_many': constants.SELECT_ALL_THAT_APPLY,
     'text': 'text',
-    'image': 'image',
-    'video': 'video',
-    'audio': 'audio',
-    'datetime': 'datetime',
-    'date': 'date',
-    'time': 'time'
+    'time': 'time',
+    'video': 'video'
 }
 
 
