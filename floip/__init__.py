@@ -14,11 +14,17 @@ SELECT_QUESTION = [constants.SELECT_ONE, constants.SELECT_ALL_THAT_APPLY]
 QUESTION_TYPES = {
     MULTIPLE_CHOICE: constants.SELECT_ONE,
     'numeric': 'integer',
-    'open': 'text',
     'geo_point': 'geopoint',
     'datetime': 'dateTime',
     'select_one': constants.SELECT_ONE,
-    'select_many': constants.SELECT_ALL_THAT_APPLY
+    'select_many': constants.SELECT_ALL_THAT_APPLY,
+    'text': 'text',
+    'image': 'image',
+    'video': 'video',
+    'audio': 'audio',
+    'datetime': 'datetime',
+    'date': 'date',
+    'time': 'time'
 }
 
 
@@ -31,8 +37,7 @@ def xform_from_floip_dict(survey, name, values):
     values - the floip question object with the type, label and question
              options for the question.
     """
-    question_type = (QUESTION_TYPES[values['type']]
-                     if values['type'] in QUESTION_TYPES else values['type'])
+    question_type = QUESTION_TYPES[values['type']]
     question_dict = {
         'name': name,
         'label': values['label'],
