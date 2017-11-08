@@ -85,7 +85,7 @@ class FloipSurvey(object):
 
         questions = resource.descriptor['schema']['questions']
 
-        question_keys = questions.keys()
+        question_keys = list(questions.keys())
         question_keys.sort()
         for name in question_keys:
             xform_from_floip_dict(self._survey, name, questions[name])
