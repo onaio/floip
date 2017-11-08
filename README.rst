@@ -1,5 +1,5 @@
-floip-py
-========
+pyfloip
+=======
 
 A library for converting the questions in a FLOIP Data Package descriptor to an
 ODK XForm.
@@ -9,9 +9,8 @@ Getting Started
 
 ::
 
-    $ pip install -e "git+git://github.com/onaio/floip-py.git@master"
+    $ pip install pyfloip
     $ floip data/flow-results-example-1.json
-
 
 Example
 ^^^^^^^
@@ -23,6 +22,14 @@ Reading a FLOIP results data package and generating the XML ODK XForm.
     from floip import FloipSurvey
     suvey = FloipSurvey('data/flow-results-example-1.json')
     print(survey.xml())
+
+Testing
+-------
+
+::
+
+    $ pip install -r requirements.txt
+    $ py.test --pylint
 
 Documentation
 -------------
