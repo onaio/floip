@@ -5,22 +5,34 @@
     <model>
       <instance>
         <data id="flow-results-example-1">
+          <ae54d1/>
+          <ae54d2/>
           <ae54d3/>
+          <ae54d4/>
+          <ae54d5/>
+          <ae54d6/>
           <ae54d7/>
           <ae54d8/>
           <ae54da/>
           <ae54db/>
+          <ae54dc/>
         </data>
       </instance>
-      <bind nodeset="/data/ae54d3" type="select1"/>
-      <bind nodeset="/data/ae54d7" type="select1"/>
-      <bind constraint=". &gt;= 1 and . &lt;= 250" nodeset="/data/ae54d8" type="int"/>
-      <bind nodeset="/data/ae54da" type="string"/>
-      <bind nodeset="/data/ae54db" type="geopoint"/>
+      <bind nodeset="/data/ae54d1" type="select1"/>
+      <bind nodeset="/data/ae54d2" type="select"/>
+      <bind constraint=". &gt;= 1 and . &lt;= 250" nodeset="/data/ae54d3" type="int"/>
+      <bind nodeset="/data/ae54d4" type="time"/>
+      <bind nodeset="/data/ae54d5" type="date"/>
+      <bind nodeset="/data/ae54d6" type="dateTime"/>
+      <bind nodeset="/data/ae54d7" type="string"/>
+      <bind nodeset="/data/ae54d8" type="geopoint"/>
+      <bind nodeset="/data/ae54da" type="binary"/>
+      <bind nodeset="/data/ae54db" type="binary"/>
+      <bind nodeset="/data/ae54dc" type="binary"/>
     </model>
   </h:head>
   <h:body>
-    <select1 ref="/data/ae54d3">
+    <select1 ref="/data/ae54d1">
       <label>Are you male or female?</label>
       <item>
         <label>male</label>
@@ -35,7 +47,7 @@
         <value>not identified</value>
       </item>
     </select1>
-    <select1 ref="/data/ae54d7">
+    <select ref="/data/ae54d2">
       <label>Favorite ice cream flavor?</label>
       <item>
         <label>chocolate</label>
@@ -49,15 +61,33 @@
         <label>strawberry</label>
         <value>strawberry</value>
       </item>
-    </select1>
-    <input ref="/data/ae54d8">
+    </select>
+    <input ref="/data/ae54d3">
       <label>How much do you weigh, in lbs?</label>
     </input>
-    <input ref="/data/ae54da">
+    <input ref="/data/ae54d4">
+      <label>What is the time?</label>
+    </input>
+    <input ref="/data/ae54d5">
+      <label>What is the date?</label>
+    </input>
+    <input ref="/data/ae54d6">
+      <label>What is the date and time?</label>
+    </input>
+    <input ref="/data/ae54d7">
       <label>How are you feeling today?</label>
     </input>
-    <input ref="/data/ae54db">
+    <input ref="/data/ae54d8">
       <label>Where are you?</label>
     </input>
+    <upload mediatype="image/*" ref="/data/ae54da">
+      <label>Could you send an image?</label>
+    </upload>
+    <upload mediatype="audio/*" ref="/data/ae54db">
+      <label>Could you send an audio?</label>
+    </upload>
+    <upload mediatype="video/*" ref="/data/ae54dc">
+      <label>Could you send a video?</label>
+    </upload>
   </h:body>
 </h:html>

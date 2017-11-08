@@ -8,13 +8,20 @@ from datapackage import Package
 from pyxform import Survey, constants
 from pyxform.builder import create_survey_element_from_dict
 
-MULTIPLE_CHOICE = 'multiple_choice'
+SELECT_QUESTION = [constants.SELECT_ONE, constants.SELECT_ALL_THAT_APPLY]
 
 QUESTION_TYPES = {
-    MULTIPLE_CHOICE: constants.SELECT_ONE,
+    'audio': 'audio',
+    'date': 'date',
+    'datetime': 'dateTime',
+    'geo_point': 'geopoint',
+    'image': 'image',
     'numeric': 'integer',
-    'open': 'text',
-    'geo_point': 'geopoint'
+    'select_one': constants.SELECT_ONE,
+    'select_many': constants.SELECT_ALL_THAT_APPLY,
+    'text': 'text',
+    'time': 'time',
+    'video': 'video'
 }
 
 
@@ -34,7 +41,7 @@ def xform_from_floip_dict(survey, name, values):
         'type': question_type
     }
     options = values.get('type_options')
-    if question_type == constants.SELECT_ONE:
+    if question_type in SELECT_QUESTION:
         question_dict['choices'] = [
             {'label': x, 'name': x} for x in options['choices']]
     if options and 'range' in options:
