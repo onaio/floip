@@ -85,8 +85,10 @@ class FloipSurvey(object):
 
         questions = resource.descriptor['schema']['questions']
 
-        for name, values in questions.items():
-            xform_from_floip_dict(self._survey, name, values)
+        question_keys = questions.keys()
+        question_keys.sort()
+        for name in question_keys:
+            xform_from_floip_dict(self._survey, name, questions[name])
 
         self._survey.validate()
         # check that we can recreate the survey object from the survey JSON
