@@ -11,11 +11,11 @@ from setuptools import setup, find_packages
 here = path.abspath(path.dirname(__file__))  # pylint: disable=invalid-name
 
 # Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()  # pylint: disable=invalid-name
 
 setup(
-    name='floip',
+    name='pyfloip',
     version='0.0.1',
     description='Converts FLOIP Results data package to XForm',
     long_description=long_description,
