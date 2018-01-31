@@ -2,13 +2,15 @@
 """
 FLOIP utility functions.
 """
+import re
 
 from datapackage import Package
-
 from pyxform import Survey, constants
 from pyxform.builder import create_survey_element_from_dict
 
 SELECT_QUESTION = [constants.SELECT_ONE, constants.SELECT_ALL_THAT_APPLY]
+
+NUMERIC = 'numeric'
 
 QUESTION_TYPES = {
     'audio': 'audio',
@@ -16,13 +18,138 @@ QUESTION_TYPES = {
     'datetime': 'dateTime',
     'geo_point': 'geopoint',
     'image': 'image',
-    'numeric': 'integer',
+    NUMERIC: 'integer',
     'select_one': constants.SELECT_ONE,
     'select_many': constants.SELECT_ALL_THAT_APPLY,
+    'text': 'text',
+    'open': 'text',
+    'time': 'time',
+    'video': 'video'
+}
+
+FLOIP_QUESTION_TYPES = {
+    'audio': 'audio',
+    'calculate': 'calculate',
+    'date': 'date',
+    'dateTime': 'datetime',
+    'geopoint': 'geo_point',
+    'image': 'image',
+    'integer': NUMERIC,
+    constants.SELECT_ONE: 'select_one',
+    constants.SELECT_ALL_THAT_APPLY: 'select_many',
     'text': 'text',
     'time': 'time',
     'video': 'video'
 }
+
+
+def floip_dict_from_xform_dict(question_dict):
+    """
+    Converts a XForm question dictionary to a FLOIP question dictionary.
+    """
+    question_type = FLOIP_QUESTION_TYPES[question_dict['type']]
+    type_options = {}
+    question = {'type': question_type}
+    if 'label' in question_dict:
+        question['label'] = question_dict['label']
+    bind = question_dict.get('bind')
+    if question_type == NUMERIC and bind and bind.get('constraint'):
+        constraint = bind['constraint']
+        is_range = len(constraint.split('and'))
+        if is_range:
+            type_options['range'] = [
+                v for v in map(int, re.findall(r'\d+', constraint))
+            ]
+    if question_type in ['select_one', 'select_many']:
+        if question_dict['children']:
+            type_options['choices'] = [
+                choice['name'] for choice in question_dict['children']
+            ]
+    if question_type == 'calculate' and bind:
+        type_options['calculate'] = bind['calculate']
+    question['type_options'] = type_options
+    return question
+
+
+def survey_questions(questions):
+    """
+    Returns an iterator of floip questions from XForm questions.
+    """
+    for question in questions:
+        if question['type'] not in ['group', 'repeat']:
+            try:
+                yield (question['name'], floip_dict_from_xform_dict(question))
+            except KeyError:
+                continue
+        else:
+            for _key, _value in survey_questions(question['children']):
+                yield '/'.join([question['name'], _key]), _value
+
+
+# pylint: disable=too-many-arguments
+def survey_to_floip_package(survey,
+                            flow_id,
+                            created,
+                            modified,
+                            data=None,
+                            data_url=None):
+    """
+    Takes an XForm suvey object and generates the equivalent Floip Descriptor
+    file.
+    """
+    descriptor = {
+        # 'profile': 'flow-results-package',
+        'profile': 'data-package',
+        'name': survey['id_string'],
+        "flow_results_specification_version": "1.0.0-rc1",
+        "created": created,
+        "modified": modified,
+        "id": flow_id,
+        'title': survey['title'],
+        "resources": [{
+            "path": data,
+            "name": survey["id_string"] + '-data',
+            "mediatype": "application/json",
+            "encoding": "utf-8",
+            "schema": {
+                "language": "eng",
+                "fields": [{
+                    "name": "timestamp",
+                    "title": "Timestamp",
+                    "type": "datetime"
+                }, {
+                    "name": "row_id",
+                    "title": "Row ID",
+                    "type": "string"
+                }, {
+                    "name": "contact_id",
+                    "title": "Contact ID",
+                    "type": "string"
+                }, {
+                    "name": "question_id",
+                    "title": "Question ID",
+                    "type": "string"
+                }, {
+                    "name": "response",
+                    "title": "Response",
+                    "type": "any"
+                }, {
+                    "name": "response_metadata",
+                    "title": "Response Metadata",
+                    "type": "object"
+                }],
+                "questions": {
+                    name: question
+                    for name, question in survey_questions(survey['children'])
+                }
+            }
+        }]
+    }  # yapf: disable
+
+    if data_url:
+        descriptor["resources"][0]["url"] = data_url
+
+    return Package(descriptor)
 
 
 def xform_from_floip_dict(survey, name, values):
@@ -42,13 +169,17 @@ def xform_from_floip_dict(survey, name, values):
     }
     options = values.get('type_options')
     if question_type in SELECT_QUESTION:
-        question_dict['choices'] = [
-            {'label': x, 'name': x} for x in options['choices']]
+        question_dict['choices'] = [{
+            'label': x,
+            'name': x
+        } for x in options['choices']]
     if options and 'range' in options:
         assert len(options['range']) > 1, "range requires atleast two values."
         start, end = options['range'][0], options['range'][1]
-        constraint = '. >= %(start)s and . <= %(end)s' % {'start': start,
-                                                          'end': end}
+        constraint = '. >= %(start)s and . <= %(end)s' % {
+            'start': start,
+            'end': end
+        }
         if 'bind' not in question_dict:
             question_dict['bind'] = {}
         question_dict['bind'].update({'constraint': constraint})
@@ -65,6 +196,7 @@ class FloipSurvey(object):
 
     def __init__(self, descriptor=None, title=None, id_string=None):
         self._package = Package(descriptor)
+        self.descriptor = self._package.descriptor
         self._name = id_string or self._package.descriptor.get('name')
         assert self._name, "The 'name' property must be defined."
         title = title or self._package.descriptor.get('title') or self._name
@@ -113,3 +245,9 @@ class FloipSurvey(object):
         Returns a XForm XML
         """
         return self._survey.to_xml()
+
+    def survey_dict(self):
+        """
+        Returns a XForm dict.
+        """
+        return self._survey.to_json_dict()

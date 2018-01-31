@@ -1,5 +1,5 @@
 {
-  "profile":"tabular-data-resource",
+  "profile":"data-package",
   "name":"flow-results-example-1",
   "flow_results_specification_version":"1.0.0-rc1",
   "created":"2017-06-30 15:35:27+00:00",
@@ -8,6 +8,7 @@
   "title":"A nice title",
   "resources":[
     {
+      "profile": "data-resource",
       "path":"data/flow-results-example-1-data.json",
       "name":"flow-results-example-1-data",
       "mediatype":"application/json",
