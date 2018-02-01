@@ -86,13 +86,7 @@ def survey_questions(questions):
                 yield '/'.join([question['name'], _key]), _value
 
 
-# pylint: disable=too-many-arguments
-def survey_to_floip_package(survey,
-                            flow_id,
-                            created,
-                            modified,
-                            data=None,
-                            data_url=None):
+def survey_to_floip_package(survey, flow_id, created, modified, data=None):
     """
     Takes an XForm suvey object and generates the equivalent Floip Descriptor
     file.
@@ -144,10 +138,8 @@ def survey_to_floip_package(survey,
                 }
             }
         }]
-    }  # yapf: disable
+    }
 
-    if data_url:
-        descriptor["resources"][0]["url"] = data_url
 
     return Package(descriptor)
 
