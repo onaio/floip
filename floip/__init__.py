@@ -43,6 +43,13 @@ FLOIP_QUESTION_TYPES = {
 }
 
 
+class ValidationError(Exception):
+    """
+    ValidationError exception class.
+    """
+    pass
+
+
 def floip_dict_from_xform_dict(question_dict):
     """
     Converts a XForm question dictionary to a FLOIP question dictionary.
@@ -208,13 +215,18 @@ class FloipSurvey(object):
         data_resource_name = self._name + '-data'
         resource = self._package.get_resource(data_resource_name)
         if not resource:
-            raise ValueError(
+            raise ValidationError(
                 "The data resource '{name}' is not defined.".format(
                     name=data_resource_name))
-        assert 'schema' in resource.descriptor
-        assert 'questions' in resource.descriptor['schema']
+        if 'schema' not in resource.descriptor:
+            raise ValidationError("The 'schema' object is missing in resource")
+        if 'questions' not in resource.descriptor['schema']:
+            raise ValidationError(
+                "The 'questions' object is missing from schema")
 
         questions = resource.descriptor['schema']['questions']
+        if not isinstance(questions, dict):
+            raise ValidationError("Expecting 'questions' to be an object")
 
         question_keys = list(questions.keys())
         question_keys.sort()

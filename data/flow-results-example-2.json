@@ -1,0 +1,127 @@
+{
+  "profile":"data-package",
+  "name":"flow-results-example-1",
+  "flow_results_specification_version":"1.0.0-rc1",
+  "created":"2017-06-30 15:35:27+00:00",
+  "modified":"2017-06-30 15:38:05+00:00",
+  "id":"b03ec84-77fd-4270-813b-0c698943f7ce",
+  "title":"A nice title",
+  "resources":[
+    {
+      "profile": "data-resource",
+      "path":"data/flow-results-example-1-data.json",
+      "name":"flow-results-example-1-data",
+      "mediatype":"application/json",
+      "encoding":"utf-8",
+      "schema":{
+        "language":"eng",
+        "fields":[
+          {
+            "name":"timestamp",
+            "title":"Timestamp",
+            "type":"datetime"
+          },
+          {
+            "name":"row_id",
+            "title":"Row ID",
+            "type":"string"
+          },
+          {
+            "name":"contact_id",
+            "title":"Contact ID",
+            "type":"string"
+          },
+          {
+            "name":"question_id",
+            "title":"Question ID",
+            "type":"string"
+          },
+          {
+            "name":"response",
+            "title":"Response",
+            "type":"any"
+          },
+          {
+            "name":"response_metadata",
+            "title":"Response Metadata",
+            "type":"object"
+          }
+        ],
+        "questions":[
+          {"ae54d1":{
+            "type":"select_one",
+            "label":"Are you male or female?",
+            "type_options":{
+              "choices":[
+                "male",
+                "female",
+                "not identified"
+              ]
+            }
+          }},
+          {"ae54d2":{
+            "type":"select_many",
+            "label":"Favorite ice cream flavor?",
+            "type_options":{
+              "choices":[
+                "chocolate",
+                "vanilla",
+                "strawberry"
+              ]
+            }
+          }},
+          {"ae54d3":{
+            "type":"numeric",
+            "label":"How much do you weigh, in lbs?",
+            "type_options":{
+              "range":[
+                1,
+                250
+              ]
+            }
+          }},
+          {"ae54d4":{
+            "type":"time",
+            "label":"What is the time?",
+            "type_options":{}
+          }},
+          {"ae54d5":{
+            "type":"date",
+            "label":"What is the date?",
+            "type_options":{}
+          }},
+          {"ae54d6":{
+            "type":"datetime",
+            "label":"What is the date and time?",
+            "type_options":{}
+          }},
+          {"ae54d7":{
+            "type":"text",
+            "label":"How are you feeling today?",
+            "type_options":{}
+          }},
+          {"ae54d8":{
+            "type":"geo_point",
+            "label":"Where are you?",
+            "type_options":{}
+          }},
+          {"ae54da":{
+            "type":"image",
+            "label":"Could you send an image?",
+            "type_options":{}
+          }},
+          {"ae54db":{
+            "type":"audio",
+            "label":"Could you send an audio?",
+            "type_options":{}
+          }},
+          {"ae54dc":{
+            "type":"video",
+            "label":"Could you send a video?",
+            "type_options":{}
+          }}
+        ]
+      }
+    }
+  ]
+}

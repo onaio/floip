@@ -6,10 +6,12 @@ Test floip utility functions."
 import codecs
 import json
 
+import pytest
 from pyxform import Survey
 
-from floip import (FloipSurvey, floip_dict_from_xform_dict, survey_questions,
-                   survey_to_floip_package, xform_from_floip_dict)
+from floip import (FloipSurvey, ValidationError, floip_dict_from_xform_dict,
+                   survey_questions, survey_to_floip_package,
+                   xform_from_floip_dict)
 
 
 def test_geopoint_question_to_xform():
@@ -526,6 +528,7 @@ def test_xform_group_to_floip():
         }
     })]
 
+
 def test_floip_descriptor_to_xform():
     """
     Test FloipSurvey - converting a flow result descriptor to an XForm xml.
@@ -550,3 +553,13 @@ def test_xform_to_floip_descriptor():
             'data/flow-results-example-1-data.json')
         assert package.descriptor == json.load(descriptor_file)
         assert package.valid is True
+
+
+def test_floip_descriptor_to_xform_questions_as_list(): # pylint: disable=C0103
+    """
+    Test FloipSurvey - converting a flow result descriptor to an XForm xml when
+    resource questions is a list.
+    """
+    with pytest.raises(ValidationError,
+                       match=r"Expecting 'questions' to be an object"):
+        FloipSurvey('data/flow-results-example-2.json')
