@@ -225,13 +225,18 @@ class FloipSurvey(object):
                 "The 'questions' object is missing from schema")
 
         questions = resource.descriptor['schema']['questions']
-        if not isinstance(questions, dict):
-            raise ValidationError("Expecting 'questions' to be an object")
-
-        question_keys = list(questions.keys())
-        question_keys.sort()
-        for name in question_keys:
-            xform_from_floip_dict(self._survey, name, questions[name])
+        if isinstance(questions, dict):
+            question_keys = list(questions.keys())
+            question_keys.sort()
+            for name in question_keys:
+                xform_from_floip_dict(self._survey, name, questions[name])
+        elif isinstance(questions, list):
+            for question in questions:
+                for name in question:
+                    xform_from_floip_dict(self._survey, name, question[name])
+        else:
+            raise ValidationError(
+                "Expecting 'questions' to be an object or array")
 
         self._survey.validate()
         # check that we can recreate the survey object from the survey JSON
