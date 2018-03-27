@@ -212,12 +212,10 @@ class FloipSurvey(object):
         """
         Creates the survey questions for the XForm a FLOIP descriptor.
         """
-        data_resource_name = self._name + '-data'
-        resource = self._package.get_resource(data_resource_name)
-        if not resource:
-            raise ValidationError(
-                "The data resource '{name}' is not defined.".format(
-                    name=data_resource_name))
+        if not self._package.resources:
+            raise ValidationError("At least one data resource is required.")
+
+        resource = self._package.resources[0]
         if 'schema' not in resource.descriptor:
             raise ValidationError("The 'schema' object is missing in resource")
         if 'questions' not in resource.descriptor['schema']:
