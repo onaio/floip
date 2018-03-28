@@ -1,5 +1,5 @@
 {
-  "profile":"data-package",
+  "profile":"flow-results-package",
   "name":"flow-results-example-1",
   "flow_results_specification_version":"1.0.0-rc1",
   "created":"2017-06-30 15:35:27+00:00",

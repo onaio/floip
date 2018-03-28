@@ -2,11 +2,21 @@
 """
 FLOIP utility functions.
 """
+import codecs
+import json
 import re
 
+import six
 from datapackage import Package
 from pyxform import Survey, constants
 from pyxform.builder import create_survey_element_from_dict
+
+try:
+    from json.decoder import JSONDecodeError  # pylint: disable=C0412
+except ImportError:
+    # python2 does not have JSONDecodeError, it raises a ValueError if
+    # it is not a valid JSON string.
+    JSONDecodeError = ValueError
 
 SELECT_QUESTION = [constants.SELECT_ONE, constants.SELECT_ALL_THAT_APPLY]
 
@@ -41,6 +51,8 @@ FLOIP_QUESTION_TYPES = {
     'time': 'time',
     'video': 'video'
 }
+
+FLOW_RESULTS_PROFILE = 'flow-results-package'
 
 
 class ValidationError(Exception):
@@ -145,8 +157,7 @@ def survey_to_floip_package(survey, flow_id, created, modified, data=None):
                 }
             }
         }]
-    }
-
+    }  # yapf: disable
 
     return Package(descriptor)
 
@@ -194,7 +205,26 @@ class FloipSurvey(object):
     """
 
     def __init__(self, descriptor=None, title=None, id_string=None):
-        self._package = Package(descriptor)
+        # Seek to begining of file if it has the seek attribute before loading
+        # the file.
+        if hasattr(descriptor, 'seek'):
+            descriptor.seek(0)
+        try:
+            # descriptor is a file
+            self.descriptor = json.load(descriptor)
+        except AttributeError:
+            try:
+                # descriptor is a JSON string
+                self.descriptor = json.loads(descriptor)
+            except JSONDecodeError:
+                # descriptor is a file path.
+                self.descriptor = json.load(
+                    codecs.open(descriptor, encoding='utf-8'))
+
+        if self.descriptor['profile'] == FLOW_RESULTS_PROFILE:
+            del self.descriptor['profile']
+
+        self._package = Package(self.descriptor)
         self.descriptor = self._package.descriptor
         self._name = id_string or self._package.descriptor.get('name')
         assert self._name, "The 'name' property must be defined."
