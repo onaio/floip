@@ -1,6 +1,10 @@
 pyfloip
 =======
 
+.. image:: https://api.codacy.com/project/badge/Grade/ab2327b86a7d4445875aebd4dd632d05
+   :alt: Codacy Badge
+   :target: https://app.codacy.com/app/ukanga/floip-py?utm_source=github.com&utm_medium=referral&utm_content=onaio/floip-py&utm_campaign=badger
+
 |travis|
 
 .. |travis| image:: https://travis-ci.org/onaio/floip-py.svg?branch=master
