@@ -139,6 +139,10 @@ def survey_to_floip_package(survey, flow_id, created, modified, data=None):
                     "title": "Contact ID",
                     "type": "string"
                 }, {
+                    "name": "session_id",
+                    "title": "Session ID",
+                    "type": "string"
+                }, {
                     "name": "question_id",
                     "title": "Question ID",
                     "type": "string"

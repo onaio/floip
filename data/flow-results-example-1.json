@@ -32,6 +32,11 @@
             "type":"string"
           },
           {
+            "name":"session_id",
+            "title":"Session ID",
+            "type":"string"
+          },
+          {
             "name":"question_id",
             "title":"Question ID",
             "type":"string"
