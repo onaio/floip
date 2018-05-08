@@ -16,6 +16,10 @@
           <ae54da/>
           <ae54db/>
           <ae54dc/>
+          <meta>
+            <instanceID/>
+            <contactID/>
+          </meta>
         </data>
       </instance>
       <bind nodeset="/data/ae54d1" type="select1"/>
@@ -29,6 +33,8 @@
       <bind nodeset="/data/ae54da" type="binary"/>
       <bind nodeset="/data/ae54db" type="binary"/>
       <bind nodeset="/data/ae54dc" type="binary"/>
+      <bind calculate="concat('uuid:', uuid())" nodeset="/data/meta/instanceID" type="string"/>
+      <bind calculate="''" nodeset="/data/meta/contactID" type="string"/>
     </model>
   </h:head>
   <h:body>

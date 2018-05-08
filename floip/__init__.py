@@ -101,6 +101,8 @@ def survey_questions(questions):
             except KeyError:
                 continue
         else:
+            if question['name'] == 'meta':
+                continue
             for _key, _value in survey_questions(question['children']):
                 yield '/'.join([question['name'], _key]), _value
 
@@ -270,7 +272,29 @@ class FloipSurvey(object):
             raise ValidationError(
                 "Expecting 'questions' to be an object or array")
 
+        meta_dict = {
+            "name": "meta",
+            "type": "group",
+            "control": {
+                "bodyless": True
+            },
+            "children": [{
+                "name": "instanceID",
+                "type": "calculate",
+                "bind": {
+                    "calculate": "concat('uuid:', uuid())"
+                }
+            }, {
+                "name": "contactID",
+                "type": "calculate",
+                "bind": {
+                    "calculate": "''"
+                }
+            }]
+        }  # yapf: disable
+        self._survey.add_child(create_survey_element_from_dict(meta_dict))
         self._survey.validate()
+
         # check that we can recreate the survey object from the survey JSON
         create_survey_element_from_dict(self._survey.to_json_dict())
 
