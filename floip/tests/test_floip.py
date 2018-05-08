@@ -516,11 +516,11 @@ def test_xform_group_to_floip():
                 "type": "calculate"
             }
         ],
-        "name": "meta",
+        "name": "a_group",
         "type": "group"
     }
     question = list(survey_questions([group]))
-    assert question == [('meta/instanceID', {
+    assert question == [('a_group/instanceID', {
         "type": "calculate",
         "type_options": {
             "calculate": "concat('uuid:', uuid())"
