@@ -286,10 +286,10 @@ class FloipSurvey(object):
                 }
             }, {
                 "name": "contactID",
-                "type": "calculate",
-                "bind": {
-                    "calculate": "''"
-                }
+                "type": "string",
+            }, {
+                "name": "sessionID",
+                "type": "string",
             }]
         }  # yapf: disable
         self._survey.add_child(create_survey_element_from_dict(meta_dict))

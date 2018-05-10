@@ -19,6 +19,7 @@
           <meta>
             <instanceID/>
             <contactID/>
+            <sessionID/>
           </meta>
         </data>
       </instance>
@@ -34,7 +35,8 @@
       <bind nodeset="/data/ae54db" type="binary"/>
       <bind nodeset="/data/ae54dc" type="binary"/>
       <bind calculate="concat('uuid:', uuid())" nodeset="/data/meta/instanceID" type="string"/>
-      <bind calculate="''" nodeset="/data/meta/contactID" type="string"/>
+      <bind nodeset="/data/meta/contactID" type="string"/>
+      <bind nodeset="/data/meta/sessionID" type="string"/>
     </model>
   </h:head>
   <h:body>
