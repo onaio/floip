@@ -5,6 +5,7 @@ FLOIP utility functions.
 import codecs
 import json
 import re
+import uuid
 
 import six
 from datapackage import Package
@@ -112,6 +113,11 @@ def survey_to_floip_package(survey, flow_id, created, modified, data=None):
     Takes an XForm suvey object and generates the equivalent Floip Descriptor
     file.
     """
+    flow_id = uuid.UUID(flow_id)
+
+    if flow_id.version != 4:
+        raise ValidationError('Flow ID must be a version 4 UUID')
+
     descriptor = {
         # 'profile': 'flow-results-package',
         'profile': 'data-package',
@@ -119,7 +125,7 @@ def survey_to_floip_package(survey, flow_id, created, modified, data=None):
         "flow_results_specification_version": "1.0.0-rc1",
         "created": created,
         "modified": modified,
-        "id": flow_id,
+        "id": str(flow_id),
         'title': survey['title'],
         "resources": [{
             "path": data,
