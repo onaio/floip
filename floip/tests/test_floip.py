@@ -5,12 +5,13 @@ Test floip utility functions."
 
 import codecs
 import json
+import pytest
 
 from pyxform import Survey
 
 from floip import (FloipSurvey, floip_dict_from_xform_dict,
                    survey_questions, survey_to_floip_package,
-                   xform_from_floip_dict)
+                   xform_from_floip_dict, ValidationError)
 
 
 def test_geopoint_question_to_xform():
@@ -552,6 +553,20 @@ def test_xform_to_floip_descriptor():
             'data/flow-results-example-1-data.json')
         assert package.descriptor == json.load(descriptor_file)
         assert package.valid is True
+
+
+def test_raises_error_on_invalid_uuid():  # pylint: disable=invalid-name
+    """
+    Test that the survey_to_floip_package function raises an error
+    if the passed in id is not a valid uuid
+    """
+    survey = FloipSurvey('data/flow-results-bad-uuid.json')
+    with pytest.raises(ValidationError) as error:
+        survey_to_floip_package(
+            survey.survey_dict(), survey.descriptor['id'],
+            survey.descriptor['created'], survey.descriptor['modified'],
+            'data/flow-results-bad-uuid.json')
+    assert str(error.value) == 'Flow ID must be a version 4 UUID'
 
 
 def test_floip_descriptor_to_xform_questions_as_list(): # pylint: disable=C0103
