@@ -4,48 +4,132 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
-argparse==1.4.0           # via unittest2
-astroid==1.6.1            # via pylint
-attrs==17.4.0             # via pytest
-cchardet==1.1.3           # via datapackage, tabulator
-certifi==2018.1.18        # via requests
-chardet==3.0.4            # via requests
+argparse==1.4.0
+    # via unittest2
+astroid==1.6.1
+    # via pylint
+attrs==17.4.0
+    # via pytest
+cchardet==1.1.3
+    # via
+    #   datapackage
+    #   tabulator
+certifi==2018.1.18
+    # via requests
+chardet==3.0.4
+    # via requests
 click==6.7
+    # via
+    #   -r requirements.in
+    #   datapackage
+    #   pip-tools
+    #   tableschema
+    #   tabulator
 datapackage==1.2.0
-et-xmlfile==1.0.1         # via openpyxl
-first==2.0.1              # via pip-tools
-formencode==1.3.1         # via pyxform
-idna==2.6                 # via requests
-ijson==2.3                # via tabulator
-isodate==0.6.0            # via tableschema
+    # via -r requirements.in
+et-xmlfile==1.0.1
+    # via openpyxl
+first==2.0.1
+    # via pip-tools
+formencode==1.3.1
+    # via pyxform
+idna==2.6
+    # via requests
+ijson==2.3
+    # via tabulator
+isodate==0.6.0
+    # via tableschema
 isort==4.2.15
-jdcal==1.3                # via openpyxl
-jsonlines==1.2.0          # via tabulator
-jsonpointer==1.14         # via datapackage
-jsonschema==2.6.0         # via datapackage, tableschema
-lazy-object-proxy==1.3.1  # via astroid
-linear-tsv==1.1.0         # via tabulator
-linecache2==1.0.0         # via traceback2
-mccabe==0.6.1             # via pylint
-openpyxl==2.5.0           # via tabulator
+    # via
+    #   -r requirements.in
+    #   pylint
+jdcal==1.3
+    # via openpyxl
+jsonlines==1.2.0
+    # via tabulator
+jsonpointer==1.14
+    # via datapackage
+jsonschema==2.6.0
+    # via
+    #   datapackage
+    #   tableschema
+lazy-object-proxy==1.3.1
+    # via astroid
+linear-tsv==1.1.0
+    # via tabulator
+linecache2==1.0.0
+    # via traceback2
+mccabe==0.6.1
+    # via pylint
+openpyxl==2.5.0
+    # via tabulator
 pip-tools==1.11.0
-pluggy==0.6.0             # via pytest
-py==1.5.2                 # via pytest
+    # via -r requirements.in
+pluggy==0.6.0
+    # via pytest
+py==1.10.0
+    # via pytest
 pylint==1.8.2
+    # via
+    #   -r requirements.in
+    #   pytest-pylint
 pytest-pylint==0.7.1
+    # via -r requirements.in
 pytest==3.4.0
-python-dateutil==2.6.1    # via tableschema
+    # via
+    #   -r requirements.in
+    #   pytest-pylint
+python-dateutil==2.6.1
+    # via tableschema
 pyxform==0.10.0
-requests==2.18.4          # via datapackage, tableschema, tabulator
-rfc3986==1.1.0            # via tableschema
-six==1.11.0               # via astroid, datapackage, isodate, jsonlines, linear-tsv, pip-tools, pylint, pytest, pytest-pylint, python-dateutil, tableschema, tabulator, unittest2
-sqlalchemy==1.2.2         # via tabulator
-tableschema==1.0.11       # via datapackage
-tabulator==1.13.0         # via datapackage, tableschema
-traceback2==1.4.0         # via unittest2
-unicodecsv==0.14.1        # via datapackage, pyxform, tableschema, tabulator
-unittest2==1.1.0          # via pyxform
-urllib3==1.22             # via requests
-wrapt==1.10.11            # via astroid
-xlrd==1.1.0               # via pyxform, tabulator
+    # via -r requirements.in
+requests==2.18.4
+    # via
+    #   datapackage
+    #   tableschema
+    #   tabulator
+rfc3986==1.1.0
+    # via tableschema
+six==1.11.0
+    # via
+    #   astroid
+    #   datapackage
+    #   isodate
+    #   jsonlines
+    #   linear-tsv
+    #   pip-tools
+    #   pylint
+    #   pytest
+    #   pytest-pylint
+    #   python-dateutil
+    #   tableschema
+    #   tabulator
+    #   unittest2
+sqlalchemy==1.2.2
+    # via tabulator
+tableschema==1.0.11
+    # via datapackage
+tabulator==1.13.0
+    # via
+    #   datapackage
+    #   tableschema
+traceback2==1.4.0
+    # via unittest2
+unicodecsv==0.14.1
+    # via
+    #   datapackage
+    #   pyxform
+    #   tableschema
+    #   tabulator
+unittest2==1.1.0
+    # via pyxform
+urllib3==1.22
+    # via requests
+wrapt==1.10.11
+    # via astroid
+xlrd==1.1.0
+    # via
+    #   pyxform
+    #   tabulator
 yapf==0.20.1
+    # via -r requirements.in
